@@ -6,6 +6,7 @@ import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,13 +22,13 @@ public class CardDeliveryOrderTest {
     @Test
     public void shouldBeSuccessful() {
         Selenide.open("http://localhost:9999");
-        $("[data-test-id='city'] ").setValue("Санкт-Петербург");
+        $("[data-test-id='city'] input").setValue("Санкт-Петербург");
         String planningDate = generateDate(4, "dd.MM.yyyy");
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
         $("[data-test-id='date'] input").setValue(planningDate);
         $("[data-test-id='name'] input").setValue("Олег Иванов");
         $("[data-test-id='phone'] input").setValue("+79810123456");
-        $("[data-test-id='agreement]").click();
+        $("[data-test-id='agreement']").click();
         $("button.button").click();
         $(".notification__content").shouldBe(Condition.visible, Duration.ofSeconds(15)).shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate));
 
